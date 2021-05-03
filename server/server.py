@@ -50,4 +50,4 @@ def return_state( rgb, methods = ['GET', 'POST'] ):
 if __name__ == "__main__":
     blinkt = socketIO_client.SocketIO( '192.168.1.190', 8000 )
     blinkt.on( 'return_state', return_state )
-    server.run( web, host = '0.0.0.0', port=5000 )
+    server.run( web, host = '0.0.0.0', port=5000, debug=True )
