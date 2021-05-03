@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- main.html -->
+  <!-- 2020-09-30  -->
+   <head>
+      <title>button_server_v7</title>
+   </head>
+   <style>
+      .button_small, .button_wide {
+         border-radius: 20px;
+         border: solid;
+         width: 32.5%;
+         border-width: 5px;
+         padding: 50px 25px;
+         text-align: center;
+         text-decoration: none;
+         font-family: arial;
+         font-size: 36px;
+         cursor: pointer;
+         float: left;
+         margin: .5% .25%;
+         background-color: black;
+      }
+      .button_wide { width: 98.5%; }
+   </style>
+   <body bgcolor="000000">
+      <button id="button_id0" class="button_small" color="#404040" >free</button>
+      <button id="button_id1" class="button_small" color="#404040" >working</button>
+      <button id="button_id2" class="button_small" color="#404040" >busy</button>
+      </br>
+      <button id="button_id3" class="button_wide" color="#404040" >off</button>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+
+      <script type="text/javascript">
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        socket.on( 'connect', function(){
+        })
+
+        socket.on( 'state', function( state ){
+          console.log( 'state returned' )
+          console.log( state )
+          document.getElementById("button_id0").style.color = state.b0;
+          document.getElementById("button_id1").style.color = state.b1;
+          document.getElementById("button_id2").style.color = state.b2;
+          document.getElementById("button_id3").style.color = state.b3;
+          document.getElementById("button_id0").style.borderColor = state.b0;
+          document.getElementById("button_id1").style.borderColor = state.b1;
+          document.getElementById("button_id2").style.borderColor = state.b2;
+          document.getElementById("button_id3").style.borderColor = state.b3;
+        })
+
+        $("#button_id0").click(function(){ socket.emit( 'click', 'b0' ) } );
+        $("#button_id1").click(function(){ socket.emit( 'click', 'b1' ) } );
+        $("#button_id2").click(function(){ socket.emit( 'click', 'b2' ) } );
+        $("#button_id3").click(function(){ socket.emit( 'click', 'b3' ) } );
+      </script>
+   </body>
+</html>
